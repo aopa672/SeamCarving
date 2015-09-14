@@ -1,0 +1,103 @@
+% PixelEnergy
+% Function that calculates a numerical value for the importance or energy
+% of a pixel by taking the sum of x(horizontal) and y(vertical) gradients
+% from adjacent pixels
+% Author : Asel Opata
+
+% Inputs : imageData - 3D array of image data in uint8 values
+%                      (represents row,column,layer)
+%                row - Row number in data
+%                col - Column number in data
+% Output :    energy - Measure of differences in color intensities
+%                      between pixels(double)
+
+function[energy] = PixelEnergy(imageData, row, col)
+
+% After specifying row and column of wanted pixel
+
+% Test if pixel is on the border or not
+% First determine dimensions of image data
+[rows, cols, ~] = size(imageData);
+
+% If not a border pixel
+if (row > 1 && col > 1) && (row < rows && col < cols)
+    
+    % Define the values for horizontally adjacent pixel1 and pixel2 arguments
+    % as x1 and x2
+    % Use colon command to call three RGB values in all three layers
+    % For horizontally adjacent pixels
+    x1 = imageData(row,(col+1),:);
+    x2 = imageData(row,(col-1),:);
+    
+    % Repeat for adjacent pixels in the vertical direction giving you
+    % arguments y1 and y2
+    y1 = imageData(row+1,col,:);
+    y2 = imageData(row-1,col,:);
+    
+    
+    % If pixel is a corner pixel
+    % Adjacent pixel is taken from opposite sidea ie wraps around
+    
+    % Top left corner
+elseif row == rows && col == 1
+    x1 = imageData(row,col+1,:);
+    x2 = imageData(row,cols,:);
+    y1 = imageData(1,col,:);
+    y2 = imageData(row-1,col,:);
+    % Top right corner
+elseif row == rows && col == cols
+    x1 = imageData(row,1,:);
+    x2 = imageData(row,col-1,:);
+    y1 = imageData(1,col,:);
+    y2 = imageData(row-1,col,:);
+    % Bottom left corner
+elseif row == 1 && col == 1
+    x1 = imageData(row,col+1,:);
+    x2 = imageData(row,cols,:);
+    y1 = imageData(row+1,col,:);
+    y2 = imageData(rows,col,:);
+    % Bottom right corner
+elseif row == 1 && col == cols
+    x1 = imageData(row,1,:);
+    x2 = imageData(row,col-1,:);
+    y1 = imageData(row+1,col,:);
+    y2 = imageData(rows,col,:);
+    
+    % If pixel is a non corner border pixel
+else
+    if row == 1
+        y1 = imageData(row+1,col,:);
+        y2 = imageData(rows,col,:);
+        x1 = imageData(row,col+1,:);
+        x2 = imageData(row,col-1,:);
+        
+    elseif col == 1
+        x1 = imageData(row,col+1,:);
+        x2 = imageData(row,cols,:);
+        y1 = imageData(row+1,col,:);
+        y2 = imageData(row-1,col,:);
+        
+    elseif row == rows
+        y1 = imageData(1,col,:);
+        y2 = imageData(row-1,col,:);
+        x1 = imageData(row,(col+1),:);
+        x2 = imageData(row,(col-1),:);
+        
+    elseif col == cols
+        y1 = imageData(row+1,col,:);
+        y2 = imageData(row-1,col,:);
+        x1 = imageData(row,1,:);
+        x2 = imageData(row,(col-1),:);
+    end        
+end
+
+
+
+% Calculate ygradient using PixelGradient function
+ygradient = PixelGradient(y1,y2);
+
+% Calculate xgradient using PixelGradient function
+xgradient = PixelGradient(x2,x1);
+% Add xgradient and ygradient to get energy value
+energy = xgradient + ygradient;
+end
