@@ -1,0 +1,22 @@
+% RemoveSeam
+% Removes one pixel from each row from an image and gives a output without
+% the pixels which formed a seam of the lowest energy, through the image
+% Author: Asel Opata
+
+% Inputs :   imageData - A m × n × 3 array of uint8 values (unsigned 8
+%                        bit image) representing an RGB image
+%                 seam - A 1D array representing column coordinates, of
+%                        seam pixels in each rowdescribing the path of a
+%                        minimum energy vertical from row 1 to the last row
+% Output : seamedimage - A m × (n - 1) × 3 array of uint8 values a
+%                        representing an image with the seam removed
+%                        (unsigned 8 bit integers)
+
+function[seamedData] = RemoveSeam(imageData, seam)
+% Find dimensions of image data
+[rows, ~, ~] = size(imageData);
+% Store each new row created minus seam pixel in seamedData array
+for seamrownumber = 1:rows
+    seamedData(seamrownumber,:,:) = RemovePixelFromRow(imageData(seamrownumber,:,:),seam(seamrownumber));
+end
+end
