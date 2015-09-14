@@ -1,0 +1,56 @@
+% FindLeastEnergyPathToPixel
+% Calculates the minimum energy path through adjacent pixels
+% and the minimum energy required, to get to a specified pixel
+% Author : Asel Opata
+
+% Inputs :
+%             col - Column number of pixel in image data
+%     pixelEnergy - Energy of specified pixel
+%  minEnergiesRow - 1D row array of the minimum energies required to reach
+%                   each pixel in the row above
+%        minPaths - 1D cell row array containing the minimum energy paths
+%                   (column numbers for each consecutive row) for the row
+%                   above
+
+% Outputs :
+%           minEnergy - Scalar which represents the minimum energy required
+%                       to reach the specified pixel
+%                seam - 1D row array of column numbers for each row
+%                       representing the path of minimum energy to the
+%                       specified pixel
+
+function[minEnergy,seam] =FindLeastEnergyPathToPixel(col, pixelEnergy, minEnergiesRow, minPaths)
+% If edge pixel, it only has two possible paths from above row to below
+% pixel
+if col == 1
+    [pathEnergy,realposition] = min(minEnergiesRow(col:col+1));
+    % Find minimum path energy for row and specified pixel by summing both
+    minEnergy = pathEnergy + pixelEnergy;
+    
+    % Add position of minimum energy value, to an array
+    % representing the path to the specified pixel
+    seam = [minPaths{realposition} col];
+    
+    % Repeat for opposite edge
+elseif col == length(minEnergiesRow)
+    [pathEnergy,position] = min(minEnergiesRow(col-1:col));
+    realposition = (position - 2 + col);
+    minEnergy = pathEnergy + pixelEnergy;
+    seam = [minPaths{realposition} col];
+    
+    % Otherwise if interior pixel there are three paths from above row to
+    % below
+else
+    [pathEnergy, position] = min(minEnergiesRow(col-1:col+1));
+    realposition = (position - 2 + col);
+    minEnergy = pathEnergy + pixelEnergy;
+    
+    seam = [minPaths{realposition} col];
+end
+end
+
+
+
+
+
+
