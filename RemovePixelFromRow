@@ -1,0 +1,21 @@
+% RemovePixelFromRow
+% Deletes a single seam pixel from a uint8 image data array (RGB)
+% representing a row from a image
+% Author: Asel Opata
+
+% Inputs : seamrow - A (1 × n × 3) array of uint8 values (unsigned 8 bit integers)
+%                    representing a row of n pixels taken from an RGB image
+%          seamcol - The column position of the specified pixel to remove
+% Output : seamedrow - A (1 × (n - 1) × 3) array of uint8 values representing
+%                    the row of pixels, having had the specified pixel
+%                    removed
+
+function[seamedrow] = RemovePixelFromRow(seamrow,seamcol)
+% Define the array to store the newdata
+seamedrow = seamrow;
+% Delete pixel
+seamedrow(:,seamcol,:) = [];
+end
+
+
+
