@@ -1,0 +1,26 @@
+% ColourSeam
+% Takes a 3D array representing imageData 
+% And a 1D array of pixel column coordinates
+% Colors these associated pixels red (255,0,0)
+% Author: Asel Opata
+% Inputs : imageData - m x n x 3 array of uint8 values(RGB) 
+%              seam  - 1D array representing column coordinates of 
+%                      seam pixels in each row
+% Output : imageData - m x n x 3 array of uint8 values(RGB) where
+%                      seam pixels are colored red
+
+function[coloredimageData] = ColourSeam(imageData,seam)
+% Find dimensions of image
+[rows, ~, ~] = size(imageData);
+
+% Define new array for storing colored seam data
+coloredimageData = imageData;
+% Pass through every row coloring red the pixels corresponding   
+% to the seam pixel columns
+for i = 1:rows;
+    j = seam(i);
+    coloredimageData = ConvertToRed(coloredimageData,i,j);
+end
+end
+
+    
