@@ -1,0 +1,20 @@
+% ImageEnergy
+% Function which calculates pixel energy for every pixel in an image
+% Author : Asel Opata
+% Inputs :   imageData - m x n x 3 array of RGB uint8 values
+%                        (represents row,column,layer)
+% Output : EnergyArray - 2D array showing energy values for each pixel
+%                        of original image(double)
+
+function[EnergyArray] = ImageEnergy(imageData)
+
+% Find dimensions of image
+[rows, cols, ~] = size(imageData);
+
+% Loop through image calculating energy for each pixel and storing into
+% EnergyArray
+for i = 1:rows;
+    for j = 1:cols;
+        EnergyArray(i,j) = PixelEnergy(imageData,i,j);
+    end
+end
