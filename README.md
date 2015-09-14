@@ -1,7 +1,7 @@
 #% This script file performs seam carving on an image
 % Before it will run you will need to implement the 8 functions
 % specified in the project hand out document
-% author: Peter Bier
+% author: Asel Opata
 
 clear
 clf
