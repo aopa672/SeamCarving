@@ -1,0 +1,19 @@
+% ConvertToRed
+% Takes image data and converts seam pixels to red and overwrites 
+% image data to give an output of coloredimageData
+% Inputs : coloredimageData - m x n x 3 array of uint8 values(RGB) 
+%                             representing the image data 
+%                         i - row number of seam pixel 
+%                         j - column number of seam pixel  
+% Output : coloredimageData - m x n x 3 array of uint8 values(RGB)
+%                            representing the output image data
+% Author : Asel Opata
+
+function[coloredimageData] = ConvertToRed(coloredimageData,i,j)
+% Specifies RGB values for red, (255,0,0)
+% Overwrites preexisting image data
+coloredimageData(i,j,1) = 255;
+coloredimageData(i,j,2) = 0;
+coloredimageData(i,j,3) = 0;
+end
+
